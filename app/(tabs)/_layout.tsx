@@ -1,59 +1,45 @@
-import React from 'react';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { Pressable } from 'react-native';
+import React from "react";
+import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import HorariosScreen from "@/components/HorariosScreen";
+import CalculadoraScreen from "@/components/CalculadoraScreen";
 
-import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
+const Tab = createMaterialBottomTabNavigator();
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
-      }}>
-      <Tabs.Screen
-        name="index"
+    <Tab.Navigator>
+      {/* <Tab.Screen
+        name="Paradas"
+        component={MapScreen}
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
+          tabBarLabel: 'Mapa',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="map-marker" color={color} size={26} />
+          ),
+        }}
+      /> */}
+      <Tab.Screen
+        name="Horarios"
+        component={HorariosScreen}
+        options={{
+          tabBarLabel: 'Horarios',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="clock" color={color} size={26} />
           ),
         }}
       />
-      <Tabs.Screen
-        name="two"
+       <Tab.Screen
+        name="Calculadora"
+        component={CalculadoraScreen}
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarLabel: 'Calculadora',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="calculator" color={color} size={26} />
+          ),
         }}
       />
-    </Tabs>
+    </Tab.Navigator>
   );
 }
